@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  // cart:[],
-  cart: [
-    {
-      pizzaId: 12,
-      name: "Mediterranean",
-      quantity: 2,
-      unitPrice: 16,
-      totalPrice: 32,
-    },
-  ],
+  cart:[],
+//   cart: [
+//     {
+//       pizzaId: 12,
+//       name: "Mediterranean",
+//       quantity: 2,
+//       unitPrice: 16,
+//       totalPrice: 32,
+//     },
+//   ],
   totalPrice: 0,
   numItems: 0,
 };
@@ -54,5 +54,17 @@ export const {
   clearCart,
 } = cartSlice.actions;
 
-
 export default cartSlice.reducer;
+
+// Below is the function we copied in the CartOverview component, it should also come with the get namespace
+export const getTotalCartQty = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
+
+export const getTotalCartPrice = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
+
+/**
+ * Having the selector functions here might cause performance issues in larger applications
+ * We can check the reselect library from redux documentation to allow optimization
+ */
+
