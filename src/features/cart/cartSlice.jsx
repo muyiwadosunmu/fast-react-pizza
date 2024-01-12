@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cart:[],
-//   cart: [
-//     {
-//       pizzaId: 12,
-//       name: "Mediterranean",
-//       quantity: 2,
-//       unitPrice: 16,
-//       totalPrice: 32,
-//     },
-//   ],
+  cart: [],
+  //   cart: [
+  //     {
+  //       pizzaId: 12,
+  //       name: "Mediterranean",
+  //       quantity: 2,
+  //       unitPrice: 16,
+  //       totalPrice: 32,
+  //     },
+  //   ],
   totalPrice: 0,
   numItems: 0,
 };
@@ -25,7 +25,7 @@ const cartSlice = createSlice({
     },
     deleteItem(state, action) {
       // payload = pizzaId
-      state.cart.filter((item) => item.pizzaId !== action.payload);
+      state.cart = state.cart.filter((item) => item.pizzaId !== action.payload);
     },
     increaseItemQuantity(state, action) {
       // payload = pizzaId
@@ -63,11 +63,11 @@ export const getTotalCartQty = (state) =>
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
-export const getCart = (state) =>
-  state.cart.cart;
+export const getCart = (state) => state.cart.cart;
 
+export const getCurrentQuantityById = (id) => (state) =>
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
 /**
  * Having the selector functions here might cause performance issues in larger applications
  * We can check the reselect library from redux documentation to allow optimization
  */
-
