@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Form, redirect, useNavigation, useActionData } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
@@ -7,6 +7,7 @@ import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from '../cart/EmptyCart'
 import store from '../../store'
 import { formatCurrency } from "../../utils/helpers";
+import { fetchAddress } from '../users/userSlice';
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -17,6 +18,8 @@ function CreateOrder() {
   const username = useSelector((state) => state.user.username);
   const cart = useSelector(getCart)
   const [withPriority, setWithPriority] = useState(false);
+
+  const dispatch = useDispatch()
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -36,7 +39,8 @@ function CreateOrder() {
         Ready to order? Let&apos;s go!
       </h2>
 
-      {/* No need to specifu router /order/new r-r-dom will take care of it to the closest router */}
+      {/* No need to specify router /order/new r-r-dom will take care of it to the closest router */}
+      <button onClick={() => dispatch(fetchAddress())}>Get position</button>
 
       <Form method="POST" action="">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
