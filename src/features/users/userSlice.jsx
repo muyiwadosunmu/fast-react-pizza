@@ -48,14 +48,16 @@ const userSlice = createSlice({
       .addCase(fetchAddress.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchAddress.fulfilled,(state, action) => {
+      .addCase(fetchAddress.fulfilled, (state, action) => {
         state.position = action.payload.position;
         state.address = action.payload.address;
-        state.status = 'idle';
-      }).addCase(fetchAddress.rejected, (state, action) => {
-        state.status = 'error';
-        state.error = action.error.message;
+        state.status = "idle";
       })
+      .addCase(fetchAddress.rejected, (state, action) => {
+        state.status = "error";
+        state.error =
+          "There was a problem getting your address. Make sure to fill this field";
+      }),
 });
 
 export const { updateName } = userSlice.actions;
